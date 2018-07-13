@@ -136,7 +136,7 @@ def do_some_calculations_with_clicks():
 
 def do_some_calculations_with_keystrokes():
     print 'Clearing the calculator'
-    clickElement(button_clear)
+    ActionChains(driver).send_keys('c').perform()
 
     rand1 = randint(0, 1000)
     rand2 = randint(0, 1000)
