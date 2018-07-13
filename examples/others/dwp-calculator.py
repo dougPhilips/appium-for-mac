@@ -18,19 +18,13 @@ scientificGroupPath = windowPath + "/AXGroup[2]"
 programmerGroupPath = windowPath + "/AXGroup[1]"
 
 print 'Starting the WebDriver session'
-defaultLoopDelay_sec = 1.00
-defaultCommandDelay_sec = 0.100
-defaultImplicitTimeout_sec = 3.000
-defaultMouseSpeed = 30
-defaultScreenShotOnError = False
-defaultGlobalDiagnosticsDirectory = '~/Desktop/'
 defaultCookies = [
-    {'name': 'loop_delay', 'value': defaultLoopDelay_sec},
-    {'name': 'command_delay', 'value': defaultCommandDelay_sec},
-    {'name': 'implicit_timeout', 'value': defaultImplicitTimeout_sec},
-    {'name': 'mouse_speed', 'value': defaultMouseSpeed},
-    {'name': 'screen_shot_on_error', 'value': defaultScreenShotOnError},
-    {'name': 'global_diagnostics_directory', 'value': defaultGlobalDiagnosticsDirectory}
+    {'name': 'loop_delay', 'value': 1.00},
+    {'name': 'command_delay', 'value': 0.100},
+    {'name': 'implicit_timeout', 'value': 0.100},
+    {'name': 'mouse_speed', 'value': 100},
+    {'name': 'screen_shot_on_error', 'value': False},
+    {'name': 'global_diagnostics_directory', 'value': '~/Desktop/'},
 ]
 desiredCapabilities = {'platformName': 'Mac', 'deviceName': 'Mac', 'cookies': defaultCookies}
 driver = webdriver.Remote(command_executor='http://localhost:4723/wd/hub',
@@ -48,24 +42,22 @@ for c in count():
     print "   checking:", new_xpath
     try:
         a_window = driver.find_element_by_xpath(new_xpath)
-        print a_window
+        print "found window:", a_window
         print
     except NoSuchElementException:
         print "... Nope, didn't find that one, guess we are done!"
         break
+print
 
 aboutPath = "/AXApplication[@AXTitle='Calculator']/AXWindow[@AXRoleDescription='dialog']"
 about_window = None
 try:
     about_window = driver.find_element_by_xpath(aboutPath)
-    print "Found about window!", about_window
+    print "Found about window:", about_window
 except:
     print "NO ABOUT WINDOW!"
 print
 
-
-# print 'Selecting the 1st Window'
-# driver.switch_to_window("1")
 
 def numToAXPath(num):
     if num == 0:
@@ -137,9 +129,9 @@ def do_some_calculations_with_clicks():
     answer = text_result.text
 
     if int(answer) == (rand1 + rand2):
-        print 'Correct Result: ' + answer
+        print 'Correct Result:', answer
     else:
-        print 'Incorect Result: ' + answer
+        print 'Incorect Result:', answer, 'Should be:', rand1 + rand2
 
 
 def do_some_calculations_with_keystrokes():
@@ -168,7 +160,7 @@ def do_some_calculations_with_keystrokes():
     if int(answer) == (rand1 + rand2):
         print 'Correct Result: ' + answer
     else:
-        print 'Incorect Result: ' + answer
+        print 'Incorect Result: ' + answer, 'Should be:', rand1 + rand2
 
 
 print 'Finding Some Elements...'
@@ -180,31 +172,31 @@ def calculator_mode(mode):
 
 
 view_menu_xpath = "/AXApplication/AXMenuBar/AXMenuBarItem[@AXTitle='View']"
-# driver.find_element_by_xpath(view_menu_xpath).click()
-# driver.find_element_by_xpath(calculator_mode('Basic')).click()
-# sleep(2)
-# driver.find_element_by_xpath(view_menu_xpath).click()
-# driver.find_element_by_xpath(calculator_mode('Scientific')).click()
-# sleep(2)
-# driver.find_element_by_xpath(view_menu_xpath).click()
-# driver.find_element_by_xpath(calculator_mode('Programmer')).click()
-# sleep(2)
-# driver.find_element_by_xpath(view_menu_xpath).click()
-# driver.find_element_by_xpath(calculator_mode('Basic')).click()
-# sleep(2)
+driver.find_element_by_xpath(view_menu_xpath).click()
+driver.find_element_by_xpath(calculator_mode('Basic')).click()
+sleep(2)
+driver.find_element_by_xpath(view_menu_xpath).click()
+driver.find_element_by_xpath(calculator_mode('Scientific')).click()
+sleep(2)
+driver.find_element_by_xpath(view_menu_xpath).click()
+driver.find_element_by_xpath(calculator_mode('Programmer')).click()
+sleep(2)
+driver.find_element_by_xpath(view_menu_xpath).click()
+driver.find_element_by_xpath(calculator_mode('Basic')).click()
+sleep(2)
 
 print "Now by keys!"
 
 # Command key is a toggle/shift
-ActionChains(driver).send_keys(Keys.COMMAND + "1").perform()
+
+ActionChains(driver).key_up(Keys.COMMAND).send_keys("1").key_down(Keys.COMMAND).perform()
 sleep(2)
-ActionChains(driver).send_keys("2").perform()
+ActionChains(driver).key_up(Keys.COMMAND).send_keys("2").key_down(Keys.COMMAND).perform()
 sleep(2)
-ActionChains(driver).send_keys("3").perform()
+ActionChains(driver).key_up(Keys.COMMAND).send_keys("3").key_down(Keys.COMMAND).perform()
 sleep(2)
-ActionChains(driver).send_keys("1").perform()
+ActionChains(driver).key_up(Keys.COMMAND).send_keys("1").key_down(Keys.COMMAND).perform()
 sleep(2)
-ActionChains(driver).send_keys(Keys.COMMAND).perform()
 
 button_clear = driver.find_element_by_xpath(basicGroupPath + "/AXButton[@AXDescription='clear']")
 button_plus = driver.find_element_by_xpath(basicGroupPath + "/AXButton[@AXDescription='add']")
@@ -212,12 +204,8 @@ button_equals = driver.find_element_by_xpath(basicGroupPath + "/AXButton[@AXDesc
 text_result = driver.find_element_by_xpath(resultGroupPath +
                                            "/AXStaticText[@AXDescription='main display']")
 calculator_menu = driver.find_element_by_xpath("/AXApplication/AXMenuBar/AXMenuBarItem[1]")
-quit_menu_item_xpath = "/AXApplication/AXMenuBar/AXMenuBarItem[1]/AXMenu/AXMenuItem[7]"
-quit_menu_item_xpath = "/AXApplication/AXMenuBar/AXMenuBarItem[1]/" + \
-                       "AXMenu/AXMenuItem[@AXTitle='Quit Calculator']"
 quit_menu_item_xpath = "/AXApplication/AXMenuBar/AXMenuBarItem/AXMenu/" + \
                        "AXMenuItem[@AXTitle='Quit Calculator']"
-# quit_menu_item_xpath = "//AXMenuItem[@AXTitle='Quit Calculator']"
 quit_menu_item = driver.find_element_by_xpath(quit_menu_item_xpath)
 
 print
