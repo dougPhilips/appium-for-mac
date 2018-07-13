@@ -25,7 +25,7 @@ defaultCookies = [
     {'name': 'implicit_timeout', 'value': defaultImplicitTimeout_sec},
     {'name': 'mouse_speed', 'value': defaultMouseSpeed}
 ]
-desiredCapabilities = {'platform': 'Mac', 'cookies': defaultCookies}
+desiredCapabilities = {'platformName': 'Mac', 'deviceName': 'Mac', 'cookies': defaultCookies}
 
 # Convenience method to start up a web driver session.
 # Returns: WebDriver instance
@@ -310,7 +310,8 @@ def closeWithoutSaving(driver):
     if closeButton:
         selectMenuItemFromMenuBar(driver, "File", ["Close"], "")
         time.sleep(1)
-        dontSaveButton = existsElementByXPath(driver, "/AXApplication/AXWindow[0]/AXSheet[0]/AXButton[@AXTitle='Don’t Save']")
+        # dontSaveButton = existsElementByXPath(driver, "/AXApplication/AXWindow[0]/AXSheet[0]/AXButton[@AXTitle='Don’t Save']")
+        dontSaveButton = existsElementByXPath(driver, "/AXApplication/AXWindow[0]/AXSheet[0]/AXButton[@AXTitle='Delete']")
         if dontSaveButton:
             #dontSaveButton.click()
             ActionChains(driver).click(dontSaveButton).perform()

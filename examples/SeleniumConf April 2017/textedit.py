@@ -14,7 +14,7 @@ welcomeX = 300
 messageLineY = 80
 global headerWindow
 
-driver = utilities.startWebDriverSession('http://localhost:4622/wd/hub')
+driver = utilities.startWebDriverSession('http://localhost:4723/wd/hub')
 
 # Set up a new window with Rich Text and monospaced font.
 # Returns: True if the window was created and set up correctly.

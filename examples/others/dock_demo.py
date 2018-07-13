@@ -23,9 +23,9 @@ defaultCookies = [
     {'name': 'screen_shot_on_error', 'value': defaultScreenShotOnError},
     {'name': 'global_diagnostics_directory', 'value': defaultGlobalDiagnosticsDirectory}
 ]
-desiredCapabilities = {'platform': 'Mac', 'cookies': defaultCookies}
+desiredCapabilities = {'platformName': 'Mac', 'deviceName': 'Mac',  'cookies': defaultCookies}
 # desiredCapabilities = {'platform':'Mac', 'commandDelay':50, 'loopDelay':1000, 'implicitTimeout':utilities.defaultImplicitTimeout_sec * 1000, 'mouseMoveSpeed':50, "screenShotOnError":1}
-driver = webdriver.Remote( command_executor='http://localhost:4622/wd/hub', desired_capabilities=desiredCapabilities)
+driver = webdriver.Remote( command_executor='http://localhost:4723/wd/hub', desired_capabilities=desiredCapabilities)
 
 
 sysPrefSearchField = 0
