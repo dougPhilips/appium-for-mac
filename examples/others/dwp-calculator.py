@@ -181,9 +181,6 @@ sleep(2)
 driver.find_element_by_xpath(view_menu_xpath).click()
 driver.find_element_by_xpath(calculator_mode('Programmer')).click()
 sleep(2)
-driver.find_element_by_xpath(view_menu_xpath).click()
-driver.find_element_by_xpath(calculator_mode('Basic')).click()
-sleep(2)
 
 print "Now by keys!"
 
