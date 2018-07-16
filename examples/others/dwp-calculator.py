@@ -14,6 +14,7 @@ windowPath = "/AXApplication[@AXTitle='Calculator']/AXWindow[@AXRoleDescription=
 windowPathByIndex = "/AXApplication[@AXTitle='Calculator']/AXWindow[{}]"
 resultGroupPath = windowPath + "/AXGroup[0]"
 basicGroupPath = windowPath + "/AXGroup[1]"
+basicGroupPath = windowPath + "/AXGroup"
 scientificGroupPath = windowPath + "/AXGroup[2]"
 programmerGroupPath = windowPath + "/AXGroup[1]"
 
@@ -125,7 +126,6 @@ def do_some_calculations_with_clicks():
     clickElement(button_equals)
 
     print 'Reading result from screen'
-    ActionChains(driver).move_to_element(text_result).perform()
     answer = text_result.text
 
     if int(answer) == (rand1 + rand2):
@@ -154,7 +154,6 @@ def do_some_calculations_with_keystrokes():
     ActionChains(driver).send_keys("=").perform()
 
     print 'Reading result from screen'
-    ActionChains(driver).move_to_element(text_result).perform()
     answer = text_result.text
 
     if int(answer) == (rand1 + rand2):
